@@ -1,29 +1,5 @@
 spring:
   application:
     name: ping-service
-  cloud:
-    loadbalancer:
-      retry:
-        enabled: false
-    kubernetes:
-      discovery:
-        enabled: true
 server:
   port: 8089
-feign:
-  client:
-    config:
-      default:
-        loggerLevel: full
-        retryer: feign.Retryer.Default
-        connectTimeout: 5000
-        readTimeout: 5000
-  okhttp:
-    enabled: false
-  httpclient:
-    enabled: false
-
-logging:
-  level:
-    feign: DEBUG
-

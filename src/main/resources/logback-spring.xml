@@ -1,0 +1,44 @@
+<configuration>
+    <appender name="JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+
+                <!-- Timestamp -->
+                <timestamp>
+                    <timeZone>UTC</timeZone>
+                </timestamp>
+
+                <!-- Livello, logger e servizio -->
+                <pattern>
+                    <pattern>
+                        {
+                        "log.level": "%level",
+                        "log.logger": "%logger",
+                        "service.name": "ping-app",
+                        "ecs.version": "8.11.0",
+                        "event.dataset": "springboot.logs"
+                        }
+                    </pattern>
+                </pattern>
+
+                <!-- Messaggio -->
+                <message/>
+
+                <!-- Eccezioni -->
+                <stackTrace/>
+
+                <!-- Correlazione con Elastic APM -->
+                <mdcFields>
+                    <includeMdcKeyName>trace.id</includeMdcKeyName>
+                    <includeMdcKeyName>transaction.id</includeMdcKeyName>
+                    <includeMdcKeyName>span.id</includeMdcKeyName>
+                </mdcFields>
+            </providers>
+        </encoder>
+    </appender>
+
+
+    <root level="INFO">
+        <appender-ref ref="JSON_CONSOLE"/>
+    </root>
+</configuration>

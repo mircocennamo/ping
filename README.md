@@ -7,10 +7,10 @@ mvn spring-boot:run
 # STEP per creare immagine docker e push su dockerhub
 docker build -t ping-service .
 docker login
-docker tag ping-service mircocennamo/miorepo:0.1.35-SNAPSHOT
-docker push mircocennamo/miorepo:0.1.35-SNAPSHOT
+docker tag ping-service mircocennamo/miorepo:ping-service
+docker push mircocennamo/miorepo:ping-service
 
-kubectl apply -f deployment.yaml
+kubectl apply -f kubernetes/ping.yaml
 
 # creazione token admin per accesso alla dashboard
 # Installare il Kubernetes Dashboard
@@ -60,6 +60,29 @@ curl http://my-rest-service.production.svc.cluster.local/endpoint
 # Considera l'uso di Ingress per esporre le API REST al di fuori del cluster.
 # Proteggi le comunicazioni REST utilizzando TLS e configurando politiche di rete appropriate.
 
+#starting kubernetes dashboard
+kubectl proxy
+# Accedi al Dashboard
+# Per accedere al Dashboard, apri il tuo browser e vai all'URL:
+# http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
 
 #url dashboard kubernetes
 http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
+
+
+# per esporre il servizio ping-service-nodeport all'esterno del cluster crea un ingress
+
+# Per creare un NGINX Ingress Controller sul tuo cluster Kubernetes, segui questi passaggi:  
+# Crea il namespace per l'Ingress Controller:  
+    kubectl create namespace ingress-nginx
+# Applica la configurazione dell'Ingress Controller:  
+    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
+# Verifica l'installazione:  
+    kubectl get pods -n ingress-nginx
+# Dovresti vedere i pod dell'Ingress Controller in esecuzione nel namespace ingress-nginx.  
+# Crea un Ingress Resource: Ecco un esempio di configurazione di un Ingress Resource per esporre un servizio chiamato ping-service:  
+
+    
+  Applica questa configurazione con il comando:  
+  kubectl apply -f k8s-ingress.yaml
+  Questi passaggi installeranno l'NGINX Ingress Controller e configureranno un Ingress Resource per esporre il tuo servizio ping-service all'esterno del cluster.

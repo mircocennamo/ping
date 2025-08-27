@@ -9,10 +9,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ping-service
-
+  namespace: test
   labels:
     app: ping-service
-
 spec:
   replicas: 1
   selector:
@@ -25,7 +24,7 @@ spec:
     spec:
       containers:
         - name: ping-service
-          image: mircocennamo/miorepo:0.1.37-SNAPSHOT
+          image: mircocennamo82/my-repo:ping-service
           ports:
             - containerPort: 8089
 ---
@@ -33,40 +32,14 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ping-service
+  namespace: test
   labels:
     app: ping-service
     spring-boot: "true"
-
-
 spec:
-
   selector:
     app: ping-service
   ports:
     - protocol: TCP
       port: 8089
       targetPort: 8089
-
-
-
----
-
-
----
-#apiVersion: networking.k8s.io/v1
-#kind: Ingress
-#metadata:
-#  name: ping-service-my-ingress
-#  namespace: test
-#spec:
-#  rules:
-#    - host: my-ping.example.com
-#      http:
-#        paths:
-#          - path: /
-#            pathType: Prefix
-#            backend:
-#              service:
-#                name: ping-service-loadbalancer
-#                port:
-#                  number: 8089
