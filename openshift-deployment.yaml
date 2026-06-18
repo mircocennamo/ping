@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ping-service
+  labels:
+    app: ping-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ping-service
+  template:
+    metadata:
+      labels:
+        app: ping-service
+    spec:
+      containers:
+        - name: ping-service
+          image: ping-service:latest # This will be built by OpenShift or pushed to a registry
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: openshift
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ping-service
+  labels:
+    app: ping-service
+spec:
+  selector:
+    app: ping-service
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ping-service-ingress
+  labels:
+    app: ping-service
+  annotations:
+      #forza il redirect da http a https,simulando insecureEdgeTerminationPolicy: Redirect
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  rules:
+    - host: ping-service.local
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ping-service
+                port:
+                  number: 8080
+
