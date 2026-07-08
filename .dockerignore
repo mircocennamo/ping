@@ -1,0 +1,9 @@
+.git
+.gitignore
+
+openshift/
+
+README.md
+
+target/
+```

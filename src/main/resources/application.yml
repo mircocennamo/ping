@@ -6,15 +6,18 @@ spring:
   http:
     serviceclient:
       pingpong-service:
-        #base-url: http://pong-service:8081/
-        base-url: http://localhost:8081/
+        base-url: http://pong-service/  #pong-service is the name of the service in OpenShift, and 8080 is the port exposed by the pong-service
+        #base-url: http://localhost:8081/
   application:
-    name: spring-ping-service
+    name: ping-service
   datasource:
-    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+    #url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+    url: ${JDBC_DATABASE_URL}
     driverClassName: org.h2.Driver
-    username: sa
-    password: ""
+    username: ${JDBC_DATABASE_USERNAME}
+    password: ${JDBC_DATABASE_PASSWORD}
+    #username: sa
+    #password: ""
   h2:
     console:
       enabled: true
@@ -26,13 +29,32 @@ spring:
     show-sql: true
 
 
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  server:
+    port: 8081
+  endpoint:
+    health:
+      probes:
+        enabled: true
 
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  otlp:
+    metrics:
+      export:
+        enabled: false
 
 
 
 
 logging:
   level:
+    application: ${APP_LOG_LEVEL:INFO}
     org:
       springframework: INFO
       hibernate:

@@ -57,22 +57,25 @@ spec:
   # in questo caso tramite un hostname ping-service.local.
   #L'ingress controller gestirà le richieste in arrivo e le instraderà al servizio ping-service sulla porta 8080.
 ---
-apiVersion: route.openshift.io/v1
-kind: Route
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
-  name: ping-service
+  name: ping-service-ingress
 
 spec:
-  host: ping.company.it
+  ingressClassName: traefik
 
-  to:
-    kind: Service
-    name: ping-service
+  rules:
+    - host: ping-service.company.it
 
-  port:
-    targetPort: http
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
 
-  tls:
-    termination: edge
-    insecureEdgeTerminationPolicy: Redirect
+            backend:
+              service:
+                name: ping-service
+                port:
+                  number: 8080
 

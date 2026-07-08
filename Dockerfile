@@ -1,15 +1,11 @@
-# Use a base image with JDK 25
-FROM openjdk:25-jdk-slim
+FROM eclipse-temurin:25-jdk
 
-# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the JAR file into the container
-# Assuming the JAR is built and located in target/
-COPY target/ping-service-0.1.4-SNAPSHOT.jar app.jar
+COPY target/*.jar app.jar
 
-# Expose the port the Spring Boot application runs on
+RUN chgrp -R 0 /app && chmod -R g=u /app
+
 EXPOSE 8080
 
-# Run the Spring Boot application
 ENTRYPOINT ["java", "-jar", "app.jar"]
