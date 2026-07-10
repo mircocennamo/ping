@@ -30,6 +30,10 @@
     <!-- Logger Spring -->
     <logger name="org.springframework" level="INFO"/>
 
+    <logger name="org.hibernate.SQL" level="DEBUG"/>
+
+    <logger name="org.hibernate.orm.jdbc.bind" level="TRACE"/>
+
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
     </root>

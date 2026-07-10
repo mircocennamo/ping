@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
-import com.example.demo.client.PongClient;
+
+
+import com.example.demo.client.pong.PongClient;
 import org.springframework.stereotype.Service;
 
 @Service

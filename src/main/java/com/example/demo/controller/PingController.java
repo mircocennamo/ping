@@ -1,13 +1,14 @@
 package com.example.demo.controller;
 
 import com.example.demo.exceptions.PongException;
-import com.example.demo.response.ApiResponse;
-import com.example.demo.response.Responses;
 import com.example.demo.service.PongService;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import it.interno.platform.starter.core.response.ApiResponse;
+import it.interno.platform.starter.core.response.Responses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,6 +31,7 @@ public class PingController {
 
     }
 
+    @Parameter(name = "traceparent", in = ParameterIn.HEADER, description = "Traceparent header for distributed tracing", required = false)
     @GetMapping(path = "/pingInvokePongService")
     public ApiResponse<String> pingInvokePongService() {
         log.info("PingController -> Ping pingInvokePongService request received");

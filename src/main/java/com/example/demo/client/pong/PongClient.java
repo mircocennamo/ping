@@ -1,4 +1,4 @@
-package com.example.demo.client;
+package com.example.demo.client.pong;
 
 import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.HttpExchange;

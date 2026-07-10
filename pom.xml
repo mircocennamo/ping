@@ -11,7 +11,7 @@
 
   <groupId>it.interno</groupId>
   <artifactId>ping-service</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.3-SNAPSHOT</version>
   <name>ping-service</name>
   <description>Microservizio per ping</description>
 
@@ -21,7 +21,6 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <lombok.version>1.18.46</lombok.version>
     <maven.compiler.plugin>3.15.0</maven.compiler.plugin>
-    <lombok.version>1.18.46</lombok.version>
   </properties>
 
 
@@ -31,16 +30,61 @@
     <developerConnection>scm:git:https://github.com/mircocennamo/ping.git</developerConnection>
     <tag>@{project.version}</tag>
   </scm>
+
+
+
+
+
+  <dependencyManagement>
+
+    <dependencies>
+
+      <dependency>
+        <groupId>it.interno.platform</groupId>
+        <artifactId>platform-bom</artifactId>
+        <version>0.0.3-SNAPSHOT</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+
+
+    </dependencies>
+
+  </dependencyManagement>
+
+
+
+
+
+
+
+
   <dependencies>
 
     <dependency>
+      <groupId>it.interno.platform</groupId>
+      <artifactId>platform-spring-boot-starter</artifactId>
+    </dependency>
+
+
+
+
+
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+  <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-devtools</artifactId>
       <scope>runtime</scope>
       <optional>true</optional>
     </dependency>
 
-    <!-- SPRING BOOT -->
+    <!-- SPRING BOOT
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>
@@ -52,71 +96,29 @@
       <optional>true</optional>
     </dependency>
 
-    <dependency>
+        <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-webmvc</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-validation</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-jpa</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-actuator</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>io.micrometer</groupId>
-      <artifactId>micrometer-registry-prometheus</artifactId>
-    </dependency>
-
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-opentelemetry</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springdoc</groupId>
-      <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-      <version>3.0.3</version>
-    </dependency>
+    -->
 
 
 
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-security</artifactId>
-    </dependency>
+
+
+
+
+
+
+
+
 
     <!-- Source: https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-restclient -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-restclient</artifactId>
-    </dependency>
 
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
+
+
+
 
 
   </dependencies>

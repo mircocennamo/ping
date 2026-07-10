@@ -1,5 +1,6 @@
 package com.example.demo.exceptions;
 
+import it.interno.platform.starter.web.exceptions.BusinessException;
 import org.springframework.http.HttpStatus;
 
 public class PongException extends BusinessException {

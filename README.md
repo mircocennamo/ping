@@ -19,7 +19,7 @@ docker images
 ```
 Esporta l'immagine:
 ```bash
-docker save ping-service:0.0.1-SNAPSHOT -o  ping-service.tar
+docker save ping-service:0.0.3-SNAPSHOT -o  ping-service.tar
 ```
 
 Importala in containerd:
@@ -34,7 +34,7 @@ sudo k3s ctr images ls | grep ping-service
 
 applica deployment:
 ```bash
-kubectl apply -f openshift-deployment.yaml
+execute/k8s/deploy.sh
 ```
 
 log
@@ -53,6 +53,18 @@ kubectl get all
 kubectl get ingress
 ```
 
+
+log 
+
+sudo kubectl logs  ping-service-8fc65449c-kmz9n -n interno
+
+trova il pod 
+
+kubectl get pods -n interno
+
+port fowording
+
+sudo kubectl port-forward pod/ping-service-8fc65449c-kmz9n 5005:5005 -n interno
 
 
                   +----------------+
@@ -141,3 +153,14 @@ Openshift Deployment YAML:
       +-----------+               +-----------+
       |  Pod #1   |               |  Pod #2   |
       +-----------+               +-----------+
+
+
+
+ ``` Egress IP
+
+``` OpenShift permette di assegnare uno o più IP dedicati ad un namespace.
+
+``` così tutti i pod che girano in quel namespace usciranno con quell'IP dedicato.
+ così possiamo mettere in whitelist un IP
+
+```bash

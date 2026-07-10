@@ -2,7 +2,13 @@ server:
   servlet:
     context-path: /ping
   port: 8080
+  shutdown: graceful
 spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+  threads:
+    virtual:
+      enabled: true
   http:
     serviceclient:
       pingpong-service:
@@ -11,7 +17,11 @@ spring:
   application:
     name: ping-service
   datasource:
-    #url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      connection-timeout: 30000
+      max-lifetime: 1800000
     url: ${JDBC_DATABASE_URL}
     driverClassName: org.h2.Driver
     username: ${JDBC_DATABASE_USERNAME}
@@ -43,7 +53,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info
+        include: health,info,metrics,prometheus
   otlp:
     metrics:
       export:
