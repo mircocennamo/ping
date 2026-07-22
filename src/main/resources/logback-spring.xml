@@ -27,6 +27,8 @@
     <!-- Logger applicativo -->
     <logger name="com.example.demo" level="${APP_LOG_LEVEL}"/>
 
+    <logger name="it.interno.platform" level="${APP_LOG_LEVEL}"/>
+
     <!-- Logger Spring -->
     <logger name="org.springframework" level="INFO"/>
 

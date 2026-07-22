@@ -36,6 +36,39 @@ applica deployment:
 ```bash
 execute/k8s/deploy.sh
 ```
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+DASHBOARD 
+
+
+avvia il proxy per la dashboard
+
+```bash 
+ kubectl proxy
+```
+
+
+crea token per dashboard
+
+```bash 
+ kubectl -n kubernetes-dashboard create token admin-user
+```
+
+
+riavvia dashboard
+
+```bash 
+sudo kubectl rollout restart deployment kubernetes-dashboard -n kubernetes-dashboard
+```
+
+
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+
 
 log
 ```bash
@@ -54,17 +87,31 @@ kubectl get ingress
 ```
 
 
-log 
 
+log del pod
+```bash 
 sudo kubectl logs  ping-service-8fc65449c-kmz9n -n interno
+```
 
 trova il pod 
-
+```bash 
 kubectl get pods -n interno
+```
+
+
 
 port fowording
 
-sudo kubectl port-forward pod/ping-service-8fc65449c-kmz9n 5005:5005 -n interno
+```bash 
+ kubectl port-forward svc/ping-service 8080:80 -n interno
+```
+
+```bash 
+ kubectl port-forward pod/ping-service-8fc65449c-kmz9n 5005:5005 -n interno
+```
+
+
+
 
 
                   +----------------+

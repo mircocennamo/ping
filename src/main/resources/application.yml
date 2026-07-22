@@ -22,10 +22,10 @@ spring:
       maximum-pool-size: 20
       connection-timeout: 30000
       max-lifetime: 1800000
-    url: ${JDBC_DATABASE_URL}
+    url: ${JDBC_DATABASE_URL:jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1}
     driverClassName: org.h2.Driver
-    username: ${JDBC_DATABASE_USERNAME}
-    password: ${JDBC_DATABASE_PASSWORD}
+    username: ${JDBC_DATABASE_USERNAME:sa}
+    password: ${JDBC_DATABASE_PASSWORD:password}
     #username: sa
     #password: ""
   h2:
@@ -45,8 +45,26 @@ management:
       probability: 1.0
   server:
     port: 8081
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+  metrics:
+    tags:
+        application: ${spring.application.name}
+        environment: ${ENVIRONMENT:development}
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+      percentiles:
+        http.server.requests: 0.5,0.95,0.99 # tempo normale,95% è sotto questo tempo,richieste lente
+    observations:
+      key-values:
+        services: ${spring.application.name}
   endpoint:
     health:
+      show-details: always
       probes:
         enabled: true
 
